@@ -35,15 +35,16 @@ class GameScene extends Phaser.Scene {
   create() {
     // 监听
     this.input.on("pointerdown", (pointer) => {
+      this.joyStick.destroy();
       // 虚拟摇杆
       this.joyStick = this.plugins
         .get("rexVirtualJoystick")
         .add(this, {
           x: pointer.x,
           y: pointer.y,
-          radius: 100,
-          base: this.add.circle(0, 0, 100, 0x888888, 0.4).setDepth(1),
-          thumb: this.add.circle(0, 0, 50, 0xcccccc, 0.4).setDepth(2),
+          radius: 80,
+          base: this.add.circle(0, 0, 80, 0x888888, 0.4).setDepth(1),
+          thumb: this.add.circle(0, 0, 40, 0xcccccc, 0.4).setDepth(2),
           // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
           // forceMin: 16,
           // enable: true
@@ -52,7 +53,20 @@ class GameScene extends Phaser.Scene {
     });
     this.input.on("pointerup", () => {
       this.joyStick.destroy();
-      this.joyStick = null;
+      // this.joyStick = null;
+      this.joyStick = this.plugins
+        .get("rexVirtualJoystick")
+        .add(this, {
+          x: 400,
+          y: 500,
+          radius: 80,
+          base: this.add.circle(0, 0, 80, 0x888888, 0.4).setDepth(1),
+          thumb: this.add.circle(0, 0, 40, 0xcccccc, 0.4).setDepth(2),
+          // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+          // forceMin: 16,
+          // enable: true
+        })
+        .on("update", this.dumpJoyStickState, this);
     });
     // 对象
     this.add.image(400, 300, "sky");
@@ -123,20 +137,20 @@ class GameScene extends Phaser.Scene {
       null,
       this
     );
-    /* // 虚拟摇杆
+    // 虚拟摇杆
     this.joyStick = this.plugins
       .get("rexVirtualJoystick")
       .add(this, {
-        x: 700,
+        x: 400,
         y: 500,
-        radius: 100,
-        base: this.add.circle(0, 0, 100, 0x888888, 0.4).setDepth(1),
-        thumb: this.add.circle(0, 0, 50, 0xcccccc, 0.4).setDepth(2),
+        radius: 80,
+        base: this.add.circle(0, 0, 80, 0x888888, 0.4).setDepth(1),
+        thumb: this.add.circle(0, 0, 40, 0xcccccc, 0.4).setDepth(2),
         // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
         // forceMin: 16,
         // enable: true
       })
-      .on("update", this.dumpJoyStickState, this); */
+      .on("update", this.dumpJoyStickState, this);
     this.text = this.add.text(0, 0);
     this.dumpJoyStickState();
   }
