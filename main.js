@@ -171,7 +171,7 @@ class GameScene extends Phaser.Scene {
       } else if (cursorKeys.up.isDown && this.player.body.touching.down) {
         // 同时也检测玩家是不是正与地面接触
         this.player.setVelocityY(-330);
-      } else if (cursorKeys.down.isDown) {
+      } else {
         this.player.setVelocityX(0);
         this.player.anims.play("turn");
       }
